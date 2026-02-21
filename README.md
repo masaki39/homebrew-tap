@@ -1,11 +1,11 @@
-# homebrew-tools
+# homebrew-tap
 
 Homebrew tap for shell utility tools.
 
 ## Install
 
 ```sh
-brew tap masaki39/tools
+brew tap masaki39/tap
 ```
 
 ## Tools
