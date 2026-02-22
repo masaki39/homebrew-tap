@@ -35,3 +35,17 @@ brew install csl
 ```sh
 csl --help
 ```
+
+### emoji
+
+Interactive emoji picker with clipboard integration.
+
+```sh
+brew install emoji
+```
+
+```sh
+emoji           # open interactive picker
+emoji face      # open picker with pre-filled search
+emoji --help
+```

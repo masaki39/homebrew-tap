@@ -1,0 +1,23 @@
+#!/bin/bash
+set -euo pipefail
+
+EMOJI_URL="https://raw.githubusercontent.com/github/gemoji/master/db/emoji.json"
+
+case "${1:-}" in
+  --help|-h)
+    echo "Usage: emoji [query]"
+    echo "       emoji          # open interactive picker"
+    echo "       emoji <query>  # open picker with pre-filled search"
+    exit 0
+    ;;
+esac
+
+selected=$(curl -s "$EMOJI_URL" \
+  | jq -r '.[] | select(.emoji != null) | "\(.emoji)\t\(.description)"' \
+  | fzf --query="${1:-}" --with-nth=2 --delimiter='\t')
+
+if [ -n "$selected" ]; then
+  emoji=$(printf '%s' "$selected" | cut -f1)
+  printf '%s' "$emoji" | pbcopy
+  echo "Copied: $emoji"
+fi
