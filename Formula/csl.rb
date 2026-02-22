@@ -1,8 +1,8 @@
 class Csl < Formula
   desc "Interactive Zotero CSL style selector with clipboard integration"
   homepage "https://github.com/masaki39/homebrew-tap"
-  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/v1.1.2.tar.gz"
-  sha256 "b2d473abfa7c34b73a581427571777a32c35dd997e7d26aee9821b650b590aad"
+  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/csl-v1.1.2.tar.gz"
+  sha256 "c34344f9eab01e21dfa2784acfcd952239a40448ceaad76959e12a3e4b22149b"
 
   depends_on "jq"
   depends_on "fzf"

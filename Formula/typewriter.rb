@@ -1,8 +1,8 @@
 class Typewriter < Formula
   desc "Typewriter effect CLI - type text char by char or display fortune messages"
   homepage "https://github.com/masaki39/homebrew-tap"
-  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/v1.1.2.tar.gz"
-  sha256 "b2d473abfa7c34b73a581427571777a32c35dd997e7d26aee9821b650b590aad"
+  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/typewriter-v1.1.2.tar.gz"
+  sha256 "0b76ea75618d42976860ef51d9c4f307205a2674906d54fac3c9215b5e7ba321"
 
   depends_on "fortune"
 
