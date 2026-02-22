@@ -8,16 +8,82 @@ case "${1:-}" in
     echo "Usage: emoji [query]"
     echo "       emoji          # open interactive picker"
     echo "       emoji <query>  # open picker with pre-filled search"
+    echo ""
+    echo "Keybindings:"
+    echo "  ctrl-f  filter by category"
+    echo "  ctrl-t  filter by tag"
+    echo "  ctrl-r  reset filters"
     exit 0
     ;;
 esac
 
-selected=$(curl -s "$EMOJI_URL" \
-  | jq -r '.[] | select(.emoji != null) | "\(.emoji)\t\(.description)"' \
-  | fzf --query="${1:-}" --with-nth=1,2 --delimiter='\t')
+CACHE_FILE=$(mktemp)
+DISPLAY_FILE=$(mktemp)
+trap "rm -f '$CACHE_FILE' '$DISPLAY_FILE'" EXIT
 
-if [ -n "$selected" ]; then
-  emoji=$(printf '%s' "$selected" | cut -f1)
-  printf '%s' "$emoji" | pbcopy
-  echo "Copied: $emoji"
-fi
+curl -s "$EMOJI_URL" \
+  | jq -r '.[] | select(.emoji != null) | "\(.emoji)\t\(.description)\t\(.aliases // [] | join(" "))\t\(.category // "")\t\(.tags // [] | join(" "))"' \
+  > "$CACHE_FILE"
+
+CURRENT_CAT=""
+CURRENT_TAG=""
+QUERY="${1:-}"
+
+apply_filters() {
+  awk -F'\t' -v cat="$CURRENT_CAT" -v tag="$CURRENT_TAG" \
+    '(cat=="" || $4==cat) && (tag=="" || $5 ~ tag)' \
+    "$CACHE_FILE" > "$DISPLAY_FILE"
+}
+
+build_header() {
+  local h=""
+  [ -n "$CURRENT_CAT" ] && h="${h}[C: $CURRENT_CAT] " || h="${h}[Ctrl-F: category] "
+  [ -n "$CURRENT_TAG" ] && h="${h}[T: $CURRENT_TAG] " || h="${h}[Ctrl-T: tag] "
+  h="${h}[Ctrl-R: reset]"
+  echo "$h"
+}
+
+apply_filters
+
+while true; do
+  result=$(fzf \
+    --query="$QUERY" \
+    --with-nth=1,2 \
+    --delimiter=$'\t' \
+    --nth=1,2,3 \
+    --header="$(build_header)" \
+    --expect=ctrl-f,ctrl-t,ctrl-r \
+    --print-query \
+    < "$DISPLAY_FILE" || true)
+
+  QUERY=$(printf '%s' "$result" | sed -n '1p')
+  key=$(printf '%s' "$result" | sed -n '2p')
+  selected=$(printf '%s' "$result" | sed -n '3p')
+
+  case "$key" in
+    ctrl-f)
+      cat_sel=$(cut -f4 "$CACHE_FILE" | sort -u | grep -v '^$' | fzf --prompt='Category> ' || true)
+      [ -n "$cat_sel" ] && CURRENT_CAT="$cat_sel"
+      apply_filters
+      ;;
+    ctrl-t)
+      tag_sel=$(cut -f5 "$CACHE_FILE" | tr ' ' '\n' | sort -u | grep -v '^$' | fzf --prompt='Tag> ' || true)
+      [ -n "$tag_sel" ] && CURRENT_TAG="$tag_sel"
+      apply_filters
+      ;;
+    ctrl-r)
+      CURRENT_CAT=""
+      CURRENT_TAG=""
+      QUERY=""
+      apply_filters
+      ;;
+    *)
+      if [ -n "$selected" ]; then
+        emoji_char=$(printf '%s' "$selected" | cut -f1)
+        printf '%s' "$emoji_char" | pbcopy
+        echo "Copied: $emoji_char"
+      fi
+      break
+      ;;
+  esac
+done
