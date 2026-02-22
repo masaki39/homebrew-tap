@@ -14,7 +14,7 @@ esac
 
 selected=$(curl -s "$EMOJI_URL" \
   | jq -r '.[] | select(.emoji != null) | "\(.emoji)\t\(.description)"' \
-  | fzf --query="${1:-}" --with-nth=2 --delimiter='\t')
+  | fzf --query="${1:-}" --with-nth=1,2 --delimiter='\t')
 
 if [ -n "$selected" ]; then
   emoji=$(printf '%s' "$selected" | cut -f1)
