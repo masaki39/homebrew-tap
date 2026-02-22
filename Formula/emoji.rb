@@ -1,8 +1,8 @@
 class Emoji < Formula
   desc "Interactive emoji picker with clipboard integration"
   homepage "https://github.com/masaki39/homebrew-tap"
-  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/v1.1.0.tar.gz"
-  sha256 "65dd315b488a05a0a342e059da1fb1e00f8dbfc55bdcb61bc95aa69f0fa730bf"
+  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/v1.1.1.tar.gz"
+  sha256 "3d44b7600510f1df1822b0682ac16797651b7b56c5c2ea8913c70bec367b5340"
 
   depends_on "jq"
   depends_on "fzf"
