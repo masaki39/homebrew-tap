@@ -69,7 +69,7 @@ _install() {
   prefix="$(brew --prefix)"
 
   if grep -qF "# ghq-fzf" "$zshrc" 2>/dev/null; then
-    printf "${YELLOW}Already installed${NC} in $zshrc. Overwrite? [y/N]: "
+    printf "${YELLOW}Already installed${NC} in $zshrc. \ Overwrite? [y/N]: "
     read -r ans
     [[ "$ans" != [yY] ]] && exit 0
     sed -i.bak '/^# ghq-fzf$/d; /^export GHQ_FZF_FUNC=/d; /^export GHQ_FZF_KEY=/d; /^source.*share\/ghq-fzf\/init\.zsh/d' "$zshrc"
@@ -80,28 +80,16 @@ _install() {
   echo ""
 
   printf "Command name ${CYAN}(e.g. gv, empty to skip)${NC}: "
+  local func_name=""
   read -r func_name
   if [[ -n "$func_name" ]] && [[ ! "$func_name" =~ ^[a-zA-Z_][a-zA-Z0-9_-]*$ ]]; then
     echo -e "${RED}Invalid: use letters, digits, underscores, or hyphens (must start with a letter or _).${NC}" >&2
     exit 1
   fi
 
-  printf "Key binding  ${CYAN}(e.g. ^g for Ctrl-G, empty to skip)${NC}: "
-  read -r key_binding
-  if [[ -n "$key_binding" ]] && [[ "$key_binding" == *"'"* ]]; then
-    echo -e "${RED}Invalid: key binding cannot contain single quotes.${NC}" >&2
-    exit 1
-  fi
-
-  if [[ -z "$func_name" && -z "$key_binding" ]]; then
-    echo -e "${RED}Error: at least one of command name or key binding must be set.${NC}" >&2
-    exit 1
-  fi
-
   {
     echo "# ghq-fzf"
     [[ -n "$func_name" ]] && echo "export GHQ_FZF_FUNC='$func_name'"
-    [[ -n "$key_binding" ]] && echo "export GHQ_FZF_KEY='$key_binding'"
     echo "source $prefix/share/ghq-fzf/init.zsh"
   } >> "$zshrc"
 
