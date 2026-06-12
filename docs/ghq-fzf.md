@@ -35,26 +35,47 @@ The following tools are installed automatically as dependencies:
 ```sh
 brew tap masaki39/tap
 brew install masaki39/tap/ghq-fzf
+ghq-fzf-install
 ```
+
+Then restart your shell (or run `source ~/.zshrc`).
 
 ## Usage
 
-Run `ghq-fzf` directly, or add a shell function to `~/.zshrc` for `cd` on selection:
+After installation, two ways to launch the picker:
 
-```zsh
-function gv() { local r; r=$(ghq-fzf) && [[ -n "$r" ]] && cd "$(ghq root)/$r"; }
-```
+| Method | Default | Action |
+|--------|---------|--------|
+| Type command | `gv` | Open picker and `cd` into selected repository |
+| Key binding | `Ctrl-G` | Same, from anywhere in the terminal |
 
-Then call `gv` (or any name you prefer) to open the picker and jump to the selected repository.
+### In-picker keys
 
 | Key | Action |
 |-----|--------|
-| `Enter` | Output the selected repository path (or `cd` if using the shell function) |
+| `Enter` | `cd` into the selected repository |
 | `Ctrl-O` | Open the repository in your browser |
-| `Esc` / `Ctrl-C` | Close without selection |
+| `Esc` / `Ctrl-C` | Close without changing directory |
+
+## Customization
+
+Add these lines to `~/.zshrc` **before** the `source` line added by `ghq-fzf-install`:
+
+```zsh
+export GHQ_FZF_FUNC='repo'   # change the command name (default: gv)
+export GHQ_FZF_KEY='^]'      # change the key binding  (default: Ctrl-G)
+```
+
+## Update
+
+```sh
+brew update && brew upgrade masaki39/tap/ghq-fzf
+```
 
 ## Uninstall
 
 ```sh
 brew uninstall masaki39/tap/ghq-fzf
 ```
+
+Remove the lines added by `ghq-fzf-install` from `~/.zshrc` manually if desired.

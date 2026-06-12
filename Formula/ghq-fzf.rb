@@ -1,8 +1,8 @@
 class GhqFzf < Formula
   desc "Interactive ghq repository picker with fzf"
   homepage "https://github.com/masaki39/homebrew-tap"
-  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/ghq-fzf-v1.1.1.tar.gz"
-  sha256 "054259f95995ce16c6e586c6c9052a7d1dd2d6095d945546109a8e28b13fff84"
+  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/ghq-fzf-v1.1.2.tar.gz"
+  sha256 "PLACEHOLDER"
 
   depends_on "fzf"
   depends_on "ghq"
@@ -20,8 +20,9 @@ class GhqFzf < Formula
       Run once to enable Ctrl-G key binding:
         ghq-fzf-install
 
-      Customize the key by adding to ~/.zshrc before the source line:
-        export GHQ_FZF_KEY='^t'
+      Customize by adding to ~/.zshrc before the source line:
+        export GHQ_FZF_FUNC='repo'  # command name (default: gv)
+        export GHQ_FZF_KEY='^]'     # key binding  (default: Ctrl-G)
     EOS
   end
 
