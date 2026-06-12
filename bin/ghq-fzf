@@ -69,8 +69,11 @@ _install() {
   prefix="$(brew --prefix)"
 
   if grep -qF "share/ghq-fzf/init.zsh" "$zshrc" 2>/dev/null; then
-    echo -e "${YELLOW}Already installed${NC} in $zshrc"
-    exit 0
+    printf "${YELLOW}Already installed${NC} in $zshrc. Overwrite? [y/N]: "
+    read -r ans
+    [[ "$ans" != [yY] ]] && exit 0
+    sed -i.bak '/^# ghq-fzf$/d; /^export GHQ_FZF_FUNC=/d; /^export GHQ_FZF_KEY=/d; /^source.*share\/ghq-fzf\/init\.zsh/d' "$zshrc"
+    rm -f "$zshrc.bak"
   fi
 
   echo -e "${BOLD}ghq-fzf shell integration setup${NC}"
