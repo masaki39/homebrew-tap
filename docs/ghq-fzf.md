@@ -55,6 +55,7 @@ After installation, two ways to launch the picker:
 |-----|--------|
 | `Enter` | `cd` into the selected repository |
 | `Ctrl-O` | Open the repository in your browser |
+| `Ctrl-G` | Clone a new repository (`ghq get`) and `cd` into it |
 | `Esc` / `Ctrl-C` | Close without changing directory |
 
 ## Customization

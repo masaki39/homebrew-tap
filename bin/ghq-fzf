@@ -10,6 +10,7 @@ case "${1:-}" in
     echo ""
     echo "In-app keys:"
     echo "  ctrl-o  open repository in browser"
+    echo "  ctrl-g  clone a new repository (ghq get) and cd into it"
     echo ""
     echo "Shell key binding (default: ctrl-g):"
     echo "  Set GHQ_FZF_KEY in ~/.zshrc to customize"
@@ -18,6 +19,20 @@ case "${1:-}" in
 esac
 
 root=$(ghq root)
+
+_get_helper=$(mktemp)
+cat > "$_get_helper" << 'HELPER'
+#!/usr/bin/env zsh
+printf 'ghq get (user/repo or URL): ' >&2
+read -r r || exit 1
+[[ -z "$r" ]] && exit 1
+ghq get "$r" >&2 || exit 1
+name="${r##*/}"
+name="${name%.git}"
+ghq list | grep "/${name}$" | tail -1
+HELPER
+chmod +x "$_get_helper"
+trap "rm -f '$_get_helper'" EXIT
 
 footer_cmd="
   branch=\$(git -C '$root/{}' branch --show-current 2>/dev/null)
@@ -44,9 +59,10 @@ ghq list | fzf \
   --preview-label ' Eza Preview ' \
   --border-label ' GHQ ' \
   --info-command='echo "$(echo {} | cut -d/ -f3-)  $FZF_MATCH_COUNT/$FZF_TOTAL_COUNT"' \
-  --header $'^O: browser' --header-label ' Keys ' \
+  --header $'^O: browser  ^G: clone' --header-label ' Keys ' \
   --bind "start:transform-footer($footer_cmd)" \
   --bind "focus:transform-footer($footer_cmd)" \
   --bind "zero:transform-footer(echo ' no results')" \
   --bind "ctrl-o:execute-silent(cd '$root/{}' && gh repo view --web 2>/dev/null)+abort" \
+  --bind "ctrl-g:become($_get_helper)" \
   || true
