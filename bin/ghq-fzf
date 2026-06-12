@@ -32,6 +32,7 @@ footer_cmd="
 ghq list | fzf \
   --layout=reverse \
   --style full:double \
+  --border \
   --highlight-line \
   --cycle \
   --tiebreak=index \
