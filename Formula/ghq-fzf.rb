@@ -1,8 +1,8 @@
 class GhqFzf < Formula
   desc "Interactive ghq repository picker with fzf"
   homepage "https://github.com/masaki39/homebrew-tap"
-  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/ghq-fzf-v1.1.0.tar.gz"
-  sha256 "3308fce4b53f573a14c9cb56c049b8b37f080ed06296d698e92883b356c88b7a"
+  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/ghq-fzf-v1.1.1.tar.gz"
+  sha256 "PLACEHOLDER"
 
   depends_on "fzf"
   depends_on "ghq"
@@ -11,12 +11,17 @@ class GhqFzf < Formula
 
   def install
     bin.install "bin/ghq-fzf"
+    bin.install "bin/ghq-fzf-install"
+    (share/"ghq-fzf").install "share/ghq-fzf/init.zsh"
   end
 
   def caveats
     <<~EOS
-      Add a shell function to ~/.zshrc to enable cd on selection:
-        function gv() { local r; r=$(ghq-fzf) && [[ -n "$r" ]] && cd "$(ghq root)/$r"; }
+      Run once to enable Ctrl-G key binding:
+        ghq-fzf-install
+
+      Customize the key by adding to ~/.zshrc before the source line:
+        export GHQ_FZF_KEY='^t'
     EOS
   end
 

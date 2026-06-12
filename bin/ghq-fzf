@@ -8,11 +8,11 @@ case "${1:-}" in
     echo "Interactive ghq repository picker using fzf."
     echo "Outputs the selected repository path to stdout."
     echo ""
-    echo "Keys:"
+    echo "In-app keys:"
     echo "  ctrl-o  open repository in browser"
     echo ""
-    echo "Shell integration example (add to ~/.zshrc):"
-    echo "  function gv() { local r; r=\$(ghq-fzf) && [[ -n \"\$r\" ]] && cd \"\$(ghq root)/\$r\"; }"
+    echo "Shell key binding (default: ctrl-g):"
+    echo "  Set GHQ_FZF_KEY in ~/.zshrc to customize"
     exit 0
     ;;
 esac
