@@ -1,10 +1,6 @@
-function gv() {
+function _ghq_fzf_widget() {
   local result
   result=$(ghq-fzf) && cd "$(ghq root)/$result"
-}
-
-function _ghq_fzf_widget() {
-  gv
   zle reset-prompt
 }
 zle -N _ghq_fzf_widget

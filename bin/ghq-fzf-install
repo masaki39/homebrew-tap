@@ -2,7 +2,8 @@
 set -euo pipefail
 
 ZSHRC="${ZDOTDIR:-$HOME}/.zshrc"
-SOURCE_LINE="source $(brew --prefix)/share/ghq-fzf/init.zsh"
+PREFIX="$(brew --prefix)"
+SOURCE_LINE="[[ -f $PREFIX/share/ghq-fzf/init.zsh ]] && source $PREFIX/share/ghq-fzf/init.zsh"
 
 case "${1:-}" in
   --dry-run)
@@ -14,7 +15,8 @@ case "${1:-}" in
     echo "Usage: ghq-fzf-install [--dry-run]"
     echo ""
     echo "Adds ghq-fzf shell integration to ~/.zshrc."
-    echo "The 'gv' function will be available after restarting your shell."
+    echo "Ctrl-G will launch the repository picker after restarting your shell."
+    echo "Customize the key with: export GHQ_FZF_KEY='^r'"
     exit 0
     ;;
 esac
