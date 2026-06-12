@@ -39,16 +39,11 @@ brew install masaki39/tap/ghq-fzf
 ghq-fzf install
 ```
 
-`ghq-fzf install` adds shell integration to `~/.zshrc` and lets you customize the command name and key binding interactively. Then restart your shell (or run `source ~/.zshrc`).
+`ghq-fzf install` adds shell integration to `~/.zshrc` and lets you set your command name interactively. Then restart your shell (or run `source ~/.zshrc`).
 
 ## Usage
 
-After installation, two ways to launch the picker:
-
-| Method | Default | Action |
-|--------|---------|--------|
-| Type command | `gv` | Open picker and `cd` into selected repository |
-| Key binding | `Ctrl-G` | Same, from anywhere in the terminal |
+Type your command name (e.g. `gv`) to open the picker and `cd` into the selected repository.
 
 ### In-picker keys
 
@@ -61,14 +56,13 @@ After installation, two ways to launch the picker:
 
 ## Customization
 
-Run `ghq-fzf install` to set your preferred command name and key binding interactively.
-
-To change settings later, edit the lines added to `~/.zshrc`:
+To change your command name, edit the line added to `~/.zshrc`:
 
 ```zsh
-export GHQ_FZF_FUNC='repo'  # command name (default: gv)
-export GHQ_FZF_KEY='^r'     # key binding  (default: ^g = Ctrl-G)
+export GHQ_FZF_FUNC='repo'  # your preferred command name
 ```
+
+Or run `ghq-fzf install` again to overwrite.
 
 ## Update
 

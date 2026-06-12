@@ -69,7 +69,8 @@ _install() {
   prefix="$(brew --prefix)"
 
   if grep -qF "# ghq-fzf" "$zshrc" 2>/dev/null; then
-    printf "${YELLOW}Already installed${NC} in $zshrc. \ Overwrite? [y/N]: "
+    echo -e "${YELLOW}Already installed${NC} in $zshrc."
+    printf "Overwrite? [y/N]: "
     read -r ans
     [[ "$ans" != [yY] ]] && exit 0
     sed -i.bak '/^# ghq-fzf$/d; /^export GHQ_FZF_FUNC=/d; /^export GHQ_FZF_KEY=/d; /^source.*share\/ghq-fzf\/init\.zsh/d' "$zshrc"
@@ -133,8 +134,10 @@ case "${1:-}" in
     echo "  uninstall  Remove shell integration from ~/.zshrc"
     echo ""
     echo -e "${BOLD}In-picker keys:${NC}"
+    echo "  enter   cd into the selected repository"
     echo "  ctrl-o  open repository in browser"
     echo "  ctrl-g  clone a new repository (ghq get) and cd into it"
+    echo "  esc     close without changing directory"
     ;;
   "")
     _picker
