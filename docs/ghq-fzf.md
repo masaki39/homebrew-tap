@@ -35,7 +35,12 @@ The following tools are installed automatically as dependencies:
 ```sh
 brew tap masaki39/tap
 brew install masaki39/tap/ghq-fzf
-ghq-fzf-install
+```
+
+Add to `~/.zshrc`:
+
+```zsh
+source $(brew --prefix)/share/ghq-fzf/init.zsh
 ```
 
 Then restart your shell (or run `source ~/.zshrc`).
