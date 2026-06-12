@@ -68,7 +68,7 @@ _install() {
   local prefix
   prefix="$(brew --prefix)"
 
-  if grep -qF "share/ghq-fzf/init.zsh" "$zshrc" 2>/dev/null; then
+  if grep -qF "# ghq-fzf" "$zshrc" 2>/dev/null; then
     printf "${YELLOW}Already installed${NC} in $zshrc. Overwrite? [y/N]: "
     read -r ans
     [[ "$ans" != [yY] ]] && exit 0
@@ -99,7 +99,6 @@ _install() {
   fi
 
   {
-    echo ""
     echo "# ghq-fzf"
     [[ -n "$func_name" ]] && echo "export GHQ_FZF_FUNC='$func_name'"
     [[ -n "$key_binding" ]] && echo "export GHQ_FZF_KEY='$key_binding'"
@@ -115,12 +114,12 @@ _uninstall() {
   local zshrc
   zshrc="$(readlink -f "${ZDOTDIR:-$HOME}/.zshrc" 2>/dev/null || realpath "${ZDOTDIR:-$HOME}/.zshrc")"
 
-  if ! grep -qF "share/ghq-fzf/init.zsh" "$zshrc" 2>/dev/null; then
+  if ! grep -qF "# ghq-fzf" "$zshrc" 2>/dev/null; then
     echo -e "${YELLOW}Not installed${NC} in $zshrc"
     exit 0
   fi
 
-  sed -i.bak '/^# ghq-fzf$/d; /^export GHQ_FZF_FUNC=/d; /^export GHQ_FZF_KEY=/d; /^source.*share\/ghq-fzf\/init\.zsh/d' "$zshrc"
+  sed -i.bak '/^$/{N; /\n# ghq-fzf$/d;}; /^# ghq-fzf$/d; /^export GHQ_FZF_FUNC=/d; /^export GHQ_FZF_KEY=/d; /^source.*share\/ghq-fzf\/init\.zsh/d' "$zshrc"
   rm -f "$zshrc.bak"
   echo -e "${GREEN}✓ Removed${NC} from $zshrc"
   echo "Restart your shell to apply changes."
