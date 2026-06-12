@@ -79,17 +79,21 @@ _install() {
   echo -e "${BOLD}ghq-fzf shell integration setup${NC}"
   echo ""
 
-  printf "Command name ${CYAN}(e.g. gv, empty to skip)${NC}: "
+  printf "Command name ${CYAN}(e.g. gv)${NC}: "
   local func_name=""
   read -r func_name
-  if [[ -n "$func_name" ]] && [[ ! "$func_name" =~ ^[a-zA-Z_][a-zA-Z0-9_-]*$ ]]; then
+  if [[ -z "$func_name" ]]; then
+    echo -e "${RED}Error: command name is required.${NC}" >&2
+    exit 1
+  fi
+  if [[ ! "$func_name" =~ ^[a-zA-Z_][a-zA-Z0-9_-]*$ ]]; then
     echo -e "${RED}Invalid: use letters, digits, underscores, or hyphens (must start with a letter or _).${NC}" >&2
     exit 1
   fi
 
   {
     echo "# ghq-fzf"
-    [[ -n "$func_name" ]] && echo "export GHQ_FZF_FUNC='$func_name'"
+    echo "export GHQ_FZF_FUNC='$func_name'"
     echo "source $prefix/share/ghq-fzf/init.zsh"
   } >> "$zshrc"
 
