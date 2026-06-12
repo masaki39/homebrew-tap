@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+
+ZSHRC="${ZDOTDIR:-$HOME}/.zshrc"
+SOURCE_LINE="source $(brew --prefix)/share/ghq-fzf/init.zsh"
+
+case "${1:-}" in
+  --dry-run)
+    echo "Would add to $ZSHRC:"
+    echo "  $SOURCE_LINE"
+    exit 0
+    ;;
+  --help|-h)
+    echo "Usage: ghq-fzf-install [--dry-run]"
+    echo ""
+    echo "Adds ghq-fzf shell integration to ~/.zshrc."
+    echo "The 'gv' function will be available after restarting your shell."
+    exit 0
+    ;;
+esac
+
+if grep -qF "share/ghq-fzf/init.zsh" "$ZSHRC" 2>/dev/null; then
+  echo "ghq-fzf is already configured in $ZSHRC"
+  exit 0
+fi
+
+echo "" >> "$ZSHRC"
+echo "# ghq-fzf" >> "$ZSHRC"
+echo "$SOURCE_LINE" >> "$ZSHRC"
+
+echo "Added to $ZSHRC:"
+echo "  $SOURCE_LINE"
+echo ""
+echo "Restart your shell or run: source $ZSHRC"

@@ -1,0 +1,40 @@
+#!/bin/bash
+set -euo pipefail
+
+case "${1:-}" in
+  --help|-h)
+    echo "Usage: ghq-fzf"
+    echo ""
+    echo "Interactive ghq repository picker using fzf."
+    echo "Outputs the selected repository path to stdout."
+    echo ""
+    echo "Keybindings:"
+    echo "  ctrl-o  open repository in browser"
+    echo "  ctrl-p  git pull the repository"
+    exit 0
+    ;;
+esac
+
+root=$(ghq root)
+
+footer_cmd="
+  branch=\$(git -C '$root/{}' branch --show-current 2>/dev/null)
+  updated=\$(git -C '$root/{}' log -1 --format='last updated %cr' 2>/dev/null)
+  if [ -n \"\$branch\" ] && [ -n \"\$updated\" ]; then
+    echo \" \$branch  \$updated\"
+  elif [ -n \"\$updated\" ]; then
+    echo \" \$updated\"
+  fi
+"
+
+ghq list | fzf \
+  --preview "eza -TL 2 --color=always --icons --git-ignore '$root/{}'" \
+  --preview-label ' Eza Preview ' \
+  --border-label ' GHQ ' \
+  --info-command='echo "$(echo {} | cut -d/ -f3-)  $FZF_MATCH_COUNT/$FZF_TOTAL_COUNT"' \
+  --header $'^O: browser  ^P: pull' --header-label ' Keys ' \
+  --bind "start:transform-footer($footer_cmd)" \
+  --bind "focus:transform-footer($footer_cmd)" \
+  --bind "zero:transform-footer(echo ' no results')" \
+  --bind "ctrl-o:execute(cd '$root/{}' && gh repo view --web >/dev/null 2>&1 && echo 'Browser opened' || { echo 'No remote configured'; read -r -p '[press enter]' })" \
+  --bind "ctrl-p:execute(cd '$root/{}' && echo 'Pulling...' && git pull && read -r -p '[press enter]')"
