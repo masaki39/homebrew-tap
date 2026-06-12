@@ -8,11 +8,11 @@ case "${1:-}" in
     echo "Interactive ghq repository picker using fzf."
     echo "Outputs the selected repository path to stdout."
     echo ""
-    echo "Keybindings:"
+    echo "In-app keys:"
     echo "  ctrl-o  open repository in browser"
     echo ""
-    echo "Key binding (shell integration):"
-    echo "  Set GHQ_FZF_KEY in your shell config to customize (default: ctrl-g)"
+    echo "Shell key binding (default: ctrl-g):"
+    echo "  Set GHQ_FZF_KEY in ~/.zshrc to customize"
     exit 0
     ;;
 esac
@@ -48,4 +48,5 @@ ghq list | fzf \
   --bind "start:transform-footer($footer_cmd)" \
   --bind "focus:transform-footer($footer_cmd)" \
   --bind "zero:transform-footer(echo ' no results')" \
-  --bind "ctrl-o:execute-silent(cd '$root/{}' && gh repo view --web 2>/dev/null)+abort"
+  --bind "ctrl-o:execute-silent(cd '$root/{}' && gh repo view --web 2>/dev/null)+abort" \
+  || true
