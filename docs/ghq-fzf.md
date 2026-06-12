@@ -41,7 +41,7 @@ brew install masaki39/tap/ghq-fzf
 Add to `~/.zshrc`:
 
 ```zsh
-source $(brew --prefix)/opt/ghq-fzf/share/ghq-fzf/init.zsh
+source $(brew --prefix)/share/ghq-fzf/init.zsh
 ```
 
 Then restart your shell (or run `source ~/.zshrc`).
