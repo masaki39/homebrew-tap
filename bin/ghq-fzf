@@ -10,7 +10,6 @@ case "${1:-}" in
     echo ""
     echo "Keybindings:"
     echo "  ctrl-o  open repository in browser"
-    echo "  ctrl-p  git pull the repository"
     exit 0
     ;;
 esac
@@ -32,9 +31,8 @@ ghq list | fzf \
   --preview-label ' Eza Preview ' \
   --border-label ' GHQ ' \
   --info-command='echo "$(echo {} | cut -d/ -f3-)  $FZF_MATCH_COUNT/$FZF_TOTAL_COUNT"' \
-  --header $'^O: browser  ^P: pull' --header-label ' Keys ' \
+  --header $'^O: browser' --header-label ' Keys ' \
   --bind "start:transform-footer($footer_cmd)" \
   --bind "focus:transform-footer($footer_cmd)" \
   --bind "zero:transform-footer(echo ' no results')" \
-  --bind "ctrl-o:execute(cd '$root/{}' && gh repo view --web >/dev/null 2>&1 && echo 'Browser opened' || { echo 'No remote configured'; read -r -p '[press enter]' })" \
-  --bind "ctrl-p:execute(cd '$root/{}' && echo 'Pulling...' && git pull && read -r -p '[press enter]')"
+  --bind "ctrl-o:execute(cd '$root/{}' && gh repo view --web >/dev/null 2>&1 && echo 'Browser opened' || { echo 'No remote configured'; read -r -p '[press enter]' })"
