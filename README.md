@@ -18,7 +18,6 @@ Interactive repository picker powered by ghq + fzf. Works out of the box — no 
 
 ```sh
 brew install masaki39/tap/ghq-fzf
-ghq-fzf-install
 ```
 
 ### typewriter

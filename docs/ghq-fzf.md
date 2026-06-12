@@ -5,7 +5,6 @@ Works out of the box — no configuration required.
 
 ---
 
-<!-- Screenshot placeholder: replace with an actual screenshot -->
 ![ghq-fzf screenshot](./screenshot-ghq-fzf.png)
 
 ---
@@ -17,7 +16,6 @@ Works out of the box — no configuration required.
 - **Branch name + last updated** shown in the footer on focus
 - **Open in browser** with `Ctrl-O` (uses `gh`)
 - **Tokyo Night color theme** out of the box
-- **Key binding** — launch from anywhere with `Ctrl-G`
 
 ## Requirements
 
@@ -37,35 +35,26 @@ The following tools are installed automatically as dependencies:
 ```sh
 brew tap masaki39/tap
 brew install masaki39/tap/ghq-fzf
-ghq-fzf-install
 ```
-
-Then restart your shell (or run `source ~/.zshrc`).
 
 ## Usage
 
-Press **`Ctrl-G`** in your terminal to open the picker.
+Run `ghq-fzf` directly, or add a shell function to `~/.zshrc` for `cd` on selection:
+
+```zsh
+function gv() { local r; r=$(ghq-fzf) && [[ -n "$r" ]] && cd "$(ghq root)/$r"; }
+```
+
+Then call `gv` (or any name you prefer) to open the picker and jump to the selected repository.
 
 | Key | Action |
 |-----|--------|
-| `Enter` | `cd` into the selected repository |
+| `Enter` | Output the selected repository path (or `cd` if using the shell function) |
 | `Ctrl-O` | Open the repository in your browser |
-| `Esc` / `Ctrl-C` | Close without changing directory |
-
-## Key Binding Customization
-
-By default, `Ctrl-G` is used. To change it, add this line to `~/.zshrc` **before** the `source` line:
-
-```zsh
-export GHQ_FZF_KEY='^t'   # change to any key
-```
-
-> **Note:** Avoid `^r` as it is bound to shell history search by default.
+| `Esc` / `Ctrl-C` | Close without selection |
 
 ## Uninstall
 
 ```sh
 brew uninstall masaki39/tap/ghq-fzf
 ```
-
-Remove the `source` line from `~/.zshrc` manually if desired.
