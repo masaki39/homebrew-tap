@@ -1,4 +1,5 @@
 _ghq_fzf_func="${GHQ_FZF_FUNC:-gv}"
+[[ -z "$_ghq_fzf_func" ]] && _ghq_fzf_func="gv"
 
 function $_ghq_fzf_func() {
   local result

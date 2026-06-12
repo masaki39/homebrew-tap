@@ -36,15 +36,10 @@ The following tools are installed automatically as dependencies:
 ```sh
 brew tap masaki39/tap
 brew install masaki39/tap/ghq-fzf
+ghq-fzf install
 ```
 
-Add to `~/.zshrc`:
-
-```zsh
-source $(brew --prefix)/share/ghq-fzf/init.zsh
-```
-
-Then restart your shell (or run `source ~/.zshrc`).
+`ghq-fzf install` adds shell integration to `~/.zshrc` and lets you customize the command name and key binding interactively. Then restart your shell (or run `source ~/.zshrc`).
 
 ## Usage
 
@@ -66,11 +61,13 @@ After installation, two ways to launch the picker:
 
 ## Customization
 
-Add these lines to `~/.zshrc` **before** the `source` line:
+Run `ghq-fzf install` to set your preferred command name and key binding interactively.
+
+To change settings later, edit the lines added to `~/.zshrc`:
 
 ```zsh
-export GHQ_FZF_FUNC='repo'   # change the command name (default: gv)
-export GHQ_FZF_KEY='^]'      # change the key binding  (default: Ctrl-G)
+export GHQ_FZF_FUNC='repo'  # command name (default: gv)
+export GHQ_FZF_KEY='^r'     # key binding  (default: ^g = Ctrl-G)
 ```
 
 ## Update
@@ -82,7 +79,6 @@ brew update && brew upgrade masaki39/tap/ghq-fzf
 ## Uninstall
 
 ```sh
+ghq-fzf uninstall
 brew uninstall masaki39/tap/ghq-fzf
 ```
-
-Remove the `source` line from `~/.zshrc` manually if desired.

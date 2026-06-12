@@ -1,8 +1,8 @@
 class GhqFzf < Formula
   desc "Interactive ghq repository picker with fzf"
   homepage "https://github.com/masaki39/homebrew-tap"
-  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/ghq-fzf-v1.1.8.tar.gz"
-  sha256 "aa7ae24e9b252bbda583868700d822750bd8f9a15c53ded4670c7a404a6f3318"
+  url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/ghq-fzf-v0.0.1.tar.gz"
+  sha256 "PLACEHOLDER"
 
   depends_on "fzf"
   depends_on "ghq"
@@ -16,12 +16,8 @@ class GhqFzf < Formula
 
   def caveats
     <<~EOS
-      Add to ~/.zshrc:
-        source #{opt_share}/ghq-fzf/init.zsh
-
-      Customize by adding before the source line:
-        export GHQ_FZF_FUNC='repo'  # command name (default: gv)
-        export GHQ_FZF_KEY='^]'     # key binding  (default: Ctrl-G)
+      Run once to enable shell integration:
+        ghq-fzf install
     EOS
   end
 
