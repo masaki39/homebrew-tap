@@ -15,6 +15,7 @@ Works out of the box — no configuration required.
 - **File tree preview** via `eza`
 - **Branch name + last updated** shown in the footer on focus
 - **Open in browser** with `Ctrl-O` (uses `gh`)
+- **Clone a new repository** with `Ctrl-G` (`ghq get`) and `cd` into it
 - **Tokyo Night color theme** out of the box
 
 ## Requirements
@@ -65,7 +66,7 @@ After installation, two ways to launch the picker:
 
 ## Customization
 
-Add these lines to `~/.zshrc` **before** the `source` line added by `ghq-fzf-install`:
+Add these lines to `~/.zshrc` **before** the `source` line:
 
 ```zsh
 export GHQ_FZF_FUNC='repo'   # change the command name (default: gv)
@@ -84,4 +85,4 @@ brew update && brew upgrade masaki39/tap/ghq-fzf
 brew uninstall masaki39/tap/ghq-fzf
 ```
 
-Remove the lines added by `ghq-fzf-install` from `~/.zshrc` manually if desired.
+Remove the `source` line from `~/.zshrc` manually if desired.
