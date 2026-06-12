@@ -1,7 +1,7 @@
 # ghq-fzf
 
-Interactive repository picker for [ghq](https://github.com/x-motemen/ghq), powered by [fzf](https://github.com/junegunn/fzf).  
-Works out of the box — no configuration required.
+A shell template for an interactive repository picker using [ghq](https://github.com/x-motemen/ghq) + [fzf](https://github.com/junegunn/fzf).  
+Install once and use your own command name — no extra configuration needed.
 
 ---
 
@@ -9,16 +9,16 @@ Works out of the box — no configuration required.
 
 ---
 
-## Features
+## ✨ Features
 
-- **Fuzzy search** across all your ghq-managed repositories
-- **File tree preview** via `eza`
-- **Branch name + last updated** shown in the footer on focus
-- **Open in browser** with `Ctrl-O` (uses `gh`)
-- **Clone a new repository** with `Ctrl-G` (`ghq get`) and `cd` into it
-- **Tokyo Night color theme** out of the box
+- 🔍 **Fuzzy search** across all your ghq-managed repositories
+- 🌲 **File tree preview** via `eza`
+- 🌿 **Branch name + last updated** shown in the footer on focus
+- 🌐 **Open in browser** with `Ctrl-O` (uses `gh`)
+- 📥 **Clone a new repository** with `Ctrl-G` (`ghq get`) and `cd` into it
+- 🎨 **Tokyo Night color theme** out of the box
 
-## Requirements
+## 📦 Requirements
 
 The following tools are installed automatically as dependencies:
 
@@ -29,9 +29,10 @@ The following tools are installed automatically as dependencies:
 | [eza](https://github.com/eza-community/eza) | File tree preview |
 | [gh](https://cli.github.com/) | Open repo in browser |
 
-> **Note:** `Ctrl-O` (open in browser) requires `gh auth login` to be completed in advance.
+> [!NOTE]
+> `Ctrl-O` (open in browser) requires `gh auth login` to be completed in advance.
 
-## Installation
+## 🚀 Installation
 
 ```sh
 brew tap masaki39/tap
@@ -39,9 +40,25 @@ brew install masaki39/tap/ghq-fzf
 ghq-fzf install
 ```
 
-`ghq-fzf install` adds shell integration to `~/.zshrc` and lets you set your command name interactively. Then restart your shell (or run `source ~/.zshrc`).
+`ghq-fzf install` will ask for your preferred command name and add the shell integration to `~/.zshrc` automatically.
 
-## Usage
+```
+🔧 ghq-fzf shell integration setup
+
+Command name (e.g. gv): gv
+
+✓ Installed in ~/.zshrc
+Restart your shell or run: source ~/.zshrc
+```
+
+**Manual setup** — if you prefer to edit `~/.zshrc` directly:
+
+```zsh
+export GHQ_FZF_FUNC='gv'
+source "$(brew --prefix)/share/ghq-fzf/init.zsh"
+```
+
+## 🎮 Usage
 
 Type your command name (e.g. `gv`) to open the picker and `cd` into the selected repository.
 
@@ -54,25 +71,23 @@ Type your command name (e.g. `gv`) to open the picker and `cd` into the selected
 | `Ctrl-G` | Clone a new repository (`ghq get`) and `cd` into it |
 | `Esc` / `Ctrl-C` | Close without changing directory |
 
-## Customization
+## ⚙️ Customization
 
-To change your command name, edit the line added to `~/.zshrc`:
+To change your command name, run `ghq-fzf install` again (overwrites the existing setting), or edit `~/.zshrc` directly:
 
 ```zsh
-export GHQ_FZF_FUNC='repo'  # your preferred command name
+export GHQ_FZF_FUNC='repo'  # change to any name you like
 ```
 
-Or run `ghq-fzf install` again to overwrite.
-
-## Update
+## 🔄 Update
 
 ```sh
 brew update && brew upgrade masaki39/tap/ghq-fzf
 ```
 
-## Uninstall
+## 🗑️ Uninstall
 
 ```sh
-ghq-fzf uninstall
+ghq-fzf uninstall    # removes shell integration from ~/.zshrc
 brew uninstall masaki39/tap/ghq-fzf
 ```
