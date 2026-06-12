@@ -2,7 +2,7 @@ class GhqFzf < Formula
   desc "Interactive ghq repository picker with fzf"
   homepage "https://github.com/masaki39/homebrew-tap"
   url "https://github.com/masaki39/homebrew-tap/archive/refs/tags/ghq-fzf-v1.1.0.tar.gz"
-  sha256 "PLACEHOLDER"
+  sha256 "3308fce4b53f573a14c9cb56c049b8b37f080ed06296d698e92883b356c88b7a"
 
   depends_on "fzf"
   depends_on "ghq"
