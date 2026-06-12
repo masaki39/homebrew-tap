@@ -1,12 +1,13 @@
-function _ghq_fzf_run() {
+_ghq_fzf_func="${GHQ_FZF_FUNC:-gv}"
+
+function $_ghq_fzf_func() {
   local result
   result=$(ghq-fzf) && [[ -n "$result" ]] && cd "$(ghq root)/$result"
 }
 
-alias "${GHQ_FZF_FUNC:-gv}=_ghq_fzf_run"
-
 function _ghq_fzf_widget() {
-  _ghq_fzf_run
+  "$_ghq_fzf_func"
+  BUFFER=""
   zle reset-prompt
 }
 zle -N _ghq_fzf_widget
