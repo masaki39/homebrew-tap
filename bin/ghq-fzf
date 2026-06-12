@@ -75,28 +75,31 @@ _install() {
 
   echo -e "${BOLD}ghq-fzf shell integration setup${NC}"
   echo ""
-  printf "Command name ${CYAN}[gv]${NC}: "
+
+  printf "Command name ${CYAN}(e.g. gv, empty to skip)${NC}: "
   read -r func_name
-  func_name="${func_name:-gv}"
-  if [[ ! "$func_name" =~ ^[a-zA-Z_][a-zA-Z0-9_-]*$ ]]; then
-    echo -e "${RED}Error: invalid function name '$func_name'${NC}" >&2
-    echo "Use letters, digits, underscores, or hyphens (must start with a letter or _)." >&2
+  if [[ -n "$func_name" ]] && [[ ! "$func_name" =~ ^[a-zA-Z_][a-zA-Z0-9_-]*$ ]]; then
+    echo -e "${RED}Invalid: use letters, digits, underscores, or hyphens (must start with a letter or _).${NC}" >&2
     exit 1
   fi
 
-  printf "Key binding  ${CYAN}[^g]${NC}: "
+  printf "Key binding  ${CYAN}(e.g. ^g for Ctrl-G, empty to skip)${NC}: "
   read -r key_binding
-  key_binding="${key_binding:-^g}"
-  if [[ "$key_binding" == *"'"* ]]; then
-    echo -e "${RED}Error: key binding cannot contain single quotes${NC}" >&2
+  if [[ -n "$key_binding" ]] && [[ "$key_binding" == *"'"* ]]; then
+    echo -e "${RED}Invalid: key binding cannot contain single quotes.${NC}" >&2
+    exit 1
+  fi
+
+  if [[ -z "$func_name" && -z "$key_binding" ]]; then
+    echo -e "${RED}Error: at least one of command name or key binding must be set.${NC}" >&2
     exit 1
   fi
 
   {
     echo ""
     echo "# ghq-fzf"
-    [[ "$func_name" != "gv" ]] && echo "export GHQ_FZF_FUNC='$func_name'"
-    [[ "$key_binding" != "^g" ]] && echo "export GHQ_FZF_KEY='$key_binding'"
+    [[ -n "$func_name" ]] && echo "export GHQ_FZF_FUNC='$func_name'"
+    [[ -n "$key_binding" ]] && echo "export GHQ_FZF_KEY='$key_binding'"
     echo "source $prefix/share/ghq-fzf/init.zsh"
   } >> "$zshrc"
 

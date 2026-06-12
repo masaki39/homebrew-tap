@@ -1,15 +1,17 @@
-_ghq_fzf_func="${GHQ_FZF_FUNC:-gv}"
-[[ -z "$_ghq_fzf_func" ]] && _ghq_fzf_func="gv"
+if [[ -n "${GHQ_FZF_FUNC}" ]]; then
+  function ${GHQ_FZF_FUNC}() {
+    local result
+    result=$(ghq-fzf) && [[ -n "$result" ]] && cd "$(ghq root)/$result"
+  }
+fi
 
-function $_ghq_fzf_func() {
-  local result
-  result=$(ghq-fzf) && [[ -n "$result" ]] && cd "$(ghq root)/$result"
-}
-
-function _ghq_fzf_widget() {
-  "$_ghq_fzf_func"
-  BUFFER=""
-  zle reset-prompt
-}
-zle -N _ghq_fzf_widget
-bindkey "${GHQ_FZF_KEY:-^g}" _ghq_fzf_widget
+if [[ -n "${GHQ_FZF_KEY}" ]]; then
+  function _ghq_fzf_widget() {
+    local result
+    result=$(ghq-fzf) && [[ -n "$result" ]] && cd "$(ghq root)/$result"
+    BUFFER=""
+    zle reset-prompt
+  }
+  zle -N _ghq_fzf_widget
+  bindkey "${GHQ_FZF_KEY}" _ghq_fzf_widget
+fi
