@@ -1,8 +1,8 @@
 class GhqFzf < Formula
   desc "Interactive ghq repository picker with fzf"
   homepage "https://github.com/masaki39/ghq-fzf"
-  url "https://github.com/masaki39/ghq-fzf/archive/refs/tags/v0.0.2.tar.gz"
-  sha256 "1cf6738991370cdf321dece3ef835025a002a297efdf50e5860ac2107e02dfe6"
+  url "https://github.com/masaki39/ghq-fzf/archive/refs/tags/v0.0.3.tar.gz"
+  sha256 "bdc32a43c9033c7076ae31f714fab73ab638e45da5f225b20b69d5fd607cb371"
 
   depends_on "fzf"
   depends_on "ghq"
