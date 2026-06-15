@@ -14,7 +14,7 @@ brew tap masaki39/tap
 
 Interactive repository picker powered by ghq + fzf. Works out of the box — no configuration required.
 
-→ [Documentation](docs/ghq-fzf.md)
+→ [Documentation](https://github.com/masaki39/ghq-fzf)
 
 ```sh
 brew install masaki39/tap/ghq-fzf
