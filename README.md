@@ -61,6 +61,20 @@ emoji face      # open picker with pre-filled search
 emoji --help
 ```
 
+### airdrop-cli
+
+Send files via AirDrop from the terminal. Fork of [vldmrkl/airdrop-cli](https://github.com/vldmrkl/airdrop-cli) that fixes the broken published release and a process that would otherwise hang forever if the AirDrop panel is dismissed without completing a share.
+
+→ [Documentation](https://github.com/masaki39/airdrop-cli)
+
+```sh
+brew install masaki39/tap/airdrop-cli
+```
+
+```sh
+airdrop /path/to/file
+```
+
 ---
 
 ## For Developers
