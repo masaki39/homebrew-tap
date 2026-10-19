@@ -75,6 +75,20 @@ brew install masaki39/tap/airdrop-cli
 airdrop /path/to/file
 ```
 
+### html2png
+
+Renders a local HTML file to PNG with WebKit. Helper for [quicklook.yazi](https://github.com/masaki39/quicklook.yazi), which uses it to preview legacy Office files (`.xls` / `.doc` / `.ppt`).
+
+→ [Documentation](https://github.com/masaki39/quicklook.yazi)
+
+```sh
+brew install masaki39/tap/html2png
+```
+
+```sh
+html2png in.html out.png 1920
+```
+
 ---
 
 ## For Developers
